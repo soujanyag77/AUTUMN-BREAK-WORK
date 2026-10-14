@@ -1,9 +1,9 @@
 {
-  "lastSyncTime": "2026-10-14T07:02:00.677Z",
+  "lastSyncTime": "2026-10-14T09:52:54.116Z",
   "lastSyncStatus": "SYNCED_SUCCESS",
   "masterDriveUrl": "https://drive.google.com/drive/folders/1RFLDeE-RARKYF-7YlMRpALc5_HfjoFc5?usp=drive_link",
   "masterFolderId": "1RFLDeE-RARKYF-7YlMRpALc5_HfjoFc5",
-  "totalItems": 41,
+  "totalItems": 43,
   "classFolders": [
     {
       "roman": "I",
@@ -517,6 +517,29 @@
       "formattedDate": "13 Oct 2026"
     },
     {
+      "id": "13sdxbJoLbFdOAllTaVxGVq6AeWsOqAG8",
+      "classNum": 7,
+      "classRoman": "VII",
+      "tier": "middle",
+      "folderId": "1CrkzycgwGZOTc2WQPmmH8C2qjs_YHyfv",
+      "folderUrl": "https://drive.google.com/drive/folders/1CrkzycgwGZOTc2WQPmmH8C2qjs_YHyfv",
+      "originalName": "8th_class_Hindi_Home_Work.pdf",
+      "title": "8th class Hindi Home Work",
+      "subject": "Hindi",
+      "section": "All Sections",
+      "description": "Autumn Vacation 2026 assignment for Hindi, Class 7.",
+      "mimeType": "application/pdf",
+      "fileType": "PDF Document",
+      "fileExtension": "pdf",
+      "badgeClass": "bg-red-100 text-red-800 border-red-200",
+      "iconName": "BookOpen",
+      "previewUrl": "https://drive.google.com/file/d/13sdxbJoLbFdOAllTaVxGVq6AeWsOqAG8/preview",
+      "viewUrl": "https://drive.google.com/file/d/13sdxbJoLbFdOAllTaVxGVq6AeWsOqAG8/view?usp=sharing",
+      "downloadUrl": "https://drive.google.com/uc?export=download&id=13sdxbJoLbFdOAllTaVxGVq6AeWsOqAG8",
+      "modifiedTime": 1791967328036,
+      "formattedDate": "14 Oct 2026"
+    },
+    {
       "id": "1o2y8Sc6We8ajrHER4DL1GJoRzOR2zyag",
       "classNum": 7,
       "classRoman": "VII",
@@ -583,6 +606,29 @@
       "viewUrl": "https://drive.google.com/file/d/1sZnjsr2MibhHOrb34dkzPEAiKEYFbG_V/view?usp=sharing",
       "downloadUrl": "https://drive.google.com/uc?export=download&id=1sZnjsr2MibhHOrb34dkzPEAiKEYFbG_V",
       "modifiedTime": 1791943592694,
+      "formattedDate": "14 Oct 2026"
+    },
+    {
+      "id": "1-uZzMYvLEZ1rLloD0ezqrmiIfAlET_KS",
+      "classNum": 8,
+      "classRoman": "VIII",
+      "tier": "middle",
+      "folderId": "16x0RF_mCiSCUM9wT_JXCzZ34GbCgEih-",
+      "folderUrl": "https://drive.google.com/drive/folders/16x0RF_mCiSCUM9wT_JXCzZ34GbCgEih-",
+      "originalName": "Class_8_HINDI.pdf",
+      "title": "Class 8 HINDI",
+      "subject": "Hindi",
+      "section": "All Sections",
+      "description": "Autumn Vacation 2026 assignment for Hindi, Class 8.",
+      "mimeType": "application/pdf",
+      "fileType": "PDF Document",
+      "fileExtension": "pdf",
+      "badgeClass": "bg-red-100 text-red-800 border-red-200",
+      "iconName": "BookOpen",
+      "previewUrl": "https://drive.google.com/file/d/1-uZzMYvLEZ1rLloD0ezqrmiIfAlET_KS/preview",
+      "viewUrl": "https://drive.google.com/file/d/1-uZzMYvLEZ1rLloD0ezqrmiIfAlET_KS/view?usp=sharing",
+      "downloadUrl": "https://drive.google.com/uc?export=download&id=1-uZzMYvLEZ1rLloD0ezqrmiIfAlET_KS",
+      "modifiedTime": 1791963990717,
       "formattedDate": "14 Oct 2026"
     },
     {

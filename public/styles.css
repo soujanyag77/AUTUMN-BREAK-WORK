@@ -16,14 +16,15 @@
   --countdown-border: #1E293B;
 }
 
-body {
+html, body {
   background-color: var(--autumn-bg);
   color: var(--autumn-slate);
   font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   overflow-x: hidden;
+  width: 100%;
 }
 
-/* Background autumn leaves and pine tree watermark motifs */
+/* Background autumn leaves watermark pattern */
 .autumn-decor-bg {
   background-color: #FCFBF7;
   background-image: 
@@ -33,12 +34,13 @@ body {
   background-position: 0 0, 14px 14px;
 }
 
-/* Subtle Autumn Pine & Leaf decorative watermarks */
+/* Subtle Autumn watermarks */
 .watermark-leaf {
   position: absolute;
   pointer-events: none;
-  opacity: 0.04;
+  opacity: 0.03;
   color: #D97706;
+  z-index: 0;
 }
 
 /* Countdown Card Styling */
@@ -142,6 +144,15 @@ body {
 }
 .quick-jump-senior:hover {
   background-color: #FDE68A;
+}
+
+/* Scrollbar styles */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 /* Print Styles */

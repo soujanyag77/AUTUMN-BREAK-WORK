@@ -12,46 +12,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
 
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            harvest: {
-              bg: '#FCFBF7',
-              cream: '#FDFBF7',
-              linen: '#F7F3E9',
-              amber: '#D97706',
-              amberLight: '#F59E0B',
-              amberDark: '#B45309',
-              orange: '#EA580C',
-              orangeLight: '#FB923C',
-              orangeDark: '#C2410C',
-              pine: '#166534',
-              pineLight: '#15803D',
-              slate: '#0F172A',
-              slateMuted: '#475569',
-              kvsBlue: '#002B49',
-              kvsGold: '#EAA221'
-            }
-          },
-          fontFamily: {
-            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
-            display: ['"Outfit"', 'system-ui', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace']
-          }
-        }
-      }
-    }
-  </script>
-
-  <!-- Lucide Icons & Confetti -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-
+  <!-- Compiled Production Tailwind CSS (Instant load, 0 CDN delay) -->
+  <link rel="stylesheet" href="tailwind.min.css">
   <link rel="stylesheet" href="styles.css">
+
+  <!-- Local Self-Contained Libraries -->
+  <script src="lucide.min.js"></script>
+  <script src="confetti.min.js"></script>
 </head>
 <body class="autumn-decor-bg text-slate-900 min-h-screen flex flex-col antialiased selection:bg-amber-200 selection:text-amber-900 relative">
 
@@ -60,7 +27,7 @@
     <i data-lucide="leaf" class="w-96 h-96"></i>
   </div>
   <div class="watermark-leaf bottom-20 -left-16 fixed">
-    <i data-lucide="tree-pine" class="w-80 h-80"></i>
+    <i data-lucide="leaf" class="w-80 h-80 rotate-45"></i>
   </div>
 
   <!-- TOP HEADER (WITH OFFICIAL PM SHRI KENDRIYA VIDYALAYA LOGO & RENAMED BRANDING) -->
