@@ -1,14 +1,19 @@
-/* Custom Autumn Harvest Theme & Animations */
+/* Custom Autumn Harvest Theme matching User Reference */
 :root {
-  --autumn-bg: #FDFBF7;
+  --autumn-bg: #FCFBF7;
+  --autumn-cream: #FDFBF7;
+  --autumn-linen: #F7F3E9;
   --autumn-amber: #D97706;
   --autumn-amber-light: #F59E0B;
   --autumn-orange: #EA580C;
-  --autumn-green: #166534;
-  --autumn-green-light: #15803D;
-  --autumn-slate: #1E293B;
-  --autumn-linen: #F7F3E9;
-  --autumn-card-bg: #FFFFFF;
+  --autumn-orange-dark: #C2410C;
+  --autumn-pine: #166534;
+  --autumn-pine-light: #15803D;
+  --autumn-slate: #0F172A;
+  --autumn-slate-muted: #475569;
+  --countdown-bg: #0C1322;
+  --countdown-card: #151F32;
+  --countdown-border: #1E293B;
 }
 
 body {
@@ -18,43 +23,77 @@ body {
   overflow-x: hidden;
 }
 
-/* Warm autumn scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-::-webkit-scrollbar-track {
-  background: #F5EFE6;
-}
-::-webkit-scrollbar-thumb {
-  background: #D97706;
-  border-radius: 9999px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #B45309;
+/* Background autumn leaves and pine tree watermark motifs */
+.autumn-decor-bg {
+  background-color: #FCFBF7;
+  background-image: 
+    radial-gradient(#F59E0B 0.6px, transparent 0.6px),
+    radial-gradient(#166534 0.6px, #FCFBF7 0.6px);
+  background-size: 28px 28px;
+  background-position: 0 0, 14px 14px;
 }
 
-/* Autumn Falling Leaves subtle ambient background decoration */
-.autumn-leaf-pattern {
-  background-color: #FDFBF7;
-  background-image: radial-gradient(#F59E0B 0.75px, transparent 0.75px), radial-gradient(#166534 0.75px, #FDFBF7 0.75px);
-  background-size: 30px 30px;
-  background-position: 0 0, 15px 15px;
-  background-opacity: 0.05;
+/* Subtle Autumn Pine & Leaf decorative watermarks */
+.watermark-leaf {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.04;
+  color: #D97706;
 }
 
-/* Card Hover Elevation */
+/* Countdown Card Styling */
+.countdown-container {
+  background: linear-gradient(145deg, #0C1424 0%, #111B30 100%);
+  border: 1px solid #1E2D4A;
+  box-shadow: 0 20px 40px -15px rgba(12, 19, 34, 0.4), 0 0 0 1px rgba(245, 158, 11, 0.08);
+}
+
+.countdown-tile {
+  background: #152238;
+  border: 1px solid rgba(245, 158, 11, 0.15);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Top Navigation Tabs */
+.nav-tab-active {
+  background: #FFFDF9;
+  border: 1.5px solid #FCD34D;
+  box-shadow: 0 4px 12px -2px rgba(245, 158, 11, 0.15);
+  color: #92400E;
+}
+
+.nav-tab-inactive {
+  background: transparent;
+  border: 1px solid transparent;
+  color: #64748B;
+}
+.nav-tab-inactive:hover {
+  background: #F8F5EE;
+  color: #334155;
+}
+
+/* Stat counter cards */
+.stat-card {
+  background: #FFFFFF;
+  border: 1.5px solid #FDE68A;
+  box-shadow: 0 4px 15px -3px rgba(245, 158, 11, 0.08);
+  transition: all 0.2s ease;
+}
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px -4px rgba(245, 158, 11, 0.16);
+  border-color: #F59E0B;
+}
+
+/* Homework Cards */
 .harvest-card {
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1.5px solid #FEF3C7;
 }
 .harvest-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 12px 24px -8px rgba(217, 119, 6, 0.15), 0 4px 8px -4px rgba(0, 0, 0, 0.06);
-}
-
-/* Custom glow borders */
-.harvest-border-glow {
-  box-shadow: 0 0 0 2px rgba(217, 119, 6, 0.2);
+  border-color: #F59E0B;
+  box-shadow: 0 14px 28px -6px rgba(217, 119, 6, 0.12), 0 6px 12px -4px rgba(0, 0, 0, 0.04);
 }
 
 /* Pulsing Drive beacon */
@@ -68,10 +107,41 @@ body {
   animation: pulse-beacon 2s infinite;
 }
 
-/* Modal styling */
-.modal-overlay {
-  background-color: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(4px);
+/* Quick Jump Pill styles */
+.quick-jump-primary {
+  background-color: #ECFDF5;
+  color: #065F46;
+  border: 1px solid #A7F3D0;
+}
+.quick-jump-primary:hover {
+  background-color: #D1FAE5;
+}
+
+.quick-jump-middle {
+  background-color: #F0F9FF;
+  color: #0369A1;
+  border: 1px solid #BAE6FD;
+}
+.quick-jump-middle:hover {
+  background-color: #E0F2FE;
+}
+
+.quick-jump-secondary {
+  background-color: #EEF2FF;
+  color: #4338CA;
+  border: 1px solid #C7D2FE;
+}
+.quick-jump-secondary:hover {
+  background-color: #E0E7FF;
+}
+
+.quick-jump-senior {
+  background-color: #FEF3C7;
+  color: #92400E;
+  border: 1px solid #FDE68A;
+}
+.quick-jump-senior:hover {
+  background-color: #FDE68A;
 }
 
 /* Print Styles */

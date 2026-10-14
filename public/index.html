@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CBSE Autumn Break Holiday Homework Portal (October 2026)</title>
-  <meta name="description" content="Centralized CBSE Autumn Break Holiday Homework Portal for Class 1 to 12. Real-time access and automatic sync with official Google Drive repository.">
+  <meta name="description" content="CBSE Autumn Break Holiday Homework Portal (October 2026). Reopening countdown, class-wise assignments, and live Google Drive synchronization.">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23EA580C'><path d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z'/></svg>">
 
   <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap" rel="stylesheet">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -20,7 +20,8 @@
         extend: {
           colors: {
             harvest: {
-              bg: '#FDFBF7',
+              bg: '#FCFBF7',
+              cream: '#FDFBF7',
               linen: '#F7F3E9',
               amber: '#D97706',
               amberLight: '#F59E0B',
@@ -30,103 +31,109 @@
               orangeDark: '#C2410C',
               pine: '#166534',
               pineLight: '#15803D',
-              pineDark: '#14532D',
-              slate: '#1E293B',
-              slateLight: '#334155'
+              slate: '#0F172A',
+              slateMuted: '#475569'
             }
           },
           fontFamily: {
             sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
             display: ['"Outfit"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
           }
         }
       }
     }
   </script>
 
-  <!-- Lucide Icons -->
+  <!-- Lucide Icons & Confetti -->
   <script src="https://unpkg.com/lucide@latest"></script>
-  <!-- Canvas Confetti for Celebration -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-harvest-bg text-harvest-slate min-h-screen flex flex-col antialiased autumn-leaf-pattern selection:bg-amber-200 selection:text-amber-900">
+<body class="autumn-decor-bg text-slate-900 min-h-screen flex flex-col antialiased selection:bg-amber-200 selection:text-amber-900 relative">
 
-  <!-- TOP ANNOUNCEMENT BANNER -->
-  <div class="bg-gradient-to-r from-amber-700 via-orange-600 to-green-800 text-white text-xs md:text-sm font-medium py-2 px-4 shadow-sm no-print">
-    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-      <div class="flex items-center gap-2">
-        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-white/20 backdrop-blur-sm text-white">
-          <i data-lucide="sparkles" class="w-3.5 h-3.5 mr-1 inline"></i> Autumn Vacation 2026
-        </span>
-        <span class="hidden sm:inline">Assignments & Project Dockets for Classes 1 to 12</span>
-      </div>
-      <div class="flex items-center gap-4 text-xs">
-        <span class="flex items-center gap-1.5 opacity-90">
-          <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
-          Submission Deadline: Reopening Day, October 2026
-        </span>
-        <a id="topDriveLink" href="https://drive.google.com/drive/folders/1RFLDeE-RARKYF-7YlMRpALc5_HfjoFc5?usp=drive_link" target="_blank" rel="noopener noreferrer" class="hidden md:inline-flex items-center gap-1 underline hover:text-amber-200 transition">
-          <i data-lucide="folder-open" class="w-3.5 h-3.5"></i> Master Drive Folder
-        </a>
-      </div>
-    </div>
+  <!-- Watermark background leaves for visual appeal matching theme -->
+  <div class="watermark-leaf -top-10 -right-10 fixed">
+    <i data-lucide="leaf" class="w-96 h-96"></i>
+  </div>
+  <div class="watermark-leaf bottom-20 -left-16 fixed">
+    <i data-lucide="tree-pine" class="w-80 h-80"></i>
   </div>
 
-  <!-- MAIN HEADER -->
-  <header class="bg-white/95 backdrop-blur-md border-b border-amber-900/10 sticky top-0 z-40 shadow-sm transition-all no-print">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
-      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+  <!-- TOP HEADER (MATCHING USER SCREENSHOT EXACTLY) -->
+  <header class="bg-white/95 backdrop-blur-md border-b border-amber-200/80 sticky top-0 z-40 shadow-xs no-print">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
         
-        <!-- Logo & Title -->
+        <!-- Left: Logo & Badges & Title -->
         <div class="flex items-center gap-3">
-          <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-500 via-orange-500 to-amber-700 flex items-center justify-center text-white shadow-md shadow-orange-500/20 flex-shrink-0">
-            <i data-lucide="book-open" class="w-6 h-6"></i>
+          <!-- Circular orange leaf badge -->
+          <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-600 to-orange-500 flex items-center justify-center text-white shadow-sm flex-shrink-0">
+            <i data-lucide="leaf" class="w-5 h-5"></i>
           </div>
-          <div>
-            <div class="flex items-center gap-2">
-              <span class="text-xs uppercase tracking-wider font-extrabold text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200">
-                CBSE Curriculum
-              </span>
-              <span id="liveBeaconBadge" class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
-                <span class="w-2 h-2 rounded-full bg-emerald-500 beacon-live"></span>
-                <span>Live Drive Sync</span>
-              </span>
-            </div>
-            <h1 class="text-xl sm:text-2xl font-extrabold font-display text-slate-900 tracking-tight leading-tight">
-              CBSE Autumn Break Holiday Homework Portal
-              <span class="text-harvest-orange font-bold text-base sm:text-lg block sm:inline font-sans sm:ml-1">(October 2026)</span>
-            </h1>
+
+          <!-- CBSE badge icon -->
+          <div class="w-7 h-7 rounded-full bg-emerald-700 text-white flex items-center justify-center text-[10px] font-black tracking-tighter border border-emerald-500 shadow-xs flex-shrink-0">
+            CBSE
           </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <!-- Small amber pill: CBSE PORTAL • OCT 2026 -->
+            <span class="px-2.5 py-0.5 rounded-lg text-[11px] font-extrabold uppercase tracking-wide bg-amber-100 text-amber-900 border border-amber-200">
+              CBSE PORTAL • OCT 2026
+            </span>
+
+            <!-- Small mint pill: Autumn Break Active -->
+            <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-lg text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 beacon-live"></span>
+              Autumn Break Active
+            </span>
+          </div>
+
+          <!-- Bold Title -->
+          <h1 class="text-base sm:text-lg font-black font-display text-slate-900 tracking-tight ml-1 hidden sm:block">
+            Holiday Homework Portal
+          </h1>
         </div>
 
-        <!-- Header Actions: Sync & Controls -->
-        <div class="flex flex-wrap items-center gap-2.5 sm:self-center">
-          <!-- Last Synced Tag -->
-          <div class="text-xs text-slate-500 hidden lg:block text-right pr-2">
-            <div>Drive Repository: <span class="font-semibold text-emerald-700">Connected</span></div>
-            <div id="lastSyncLabel" class="text-[11px] text-slate-400">Synced just now</div>
-          </div>
-
-          <!-- Refresh / Sync Button -->
-          <button id="syncDriveBtn" class="inline-flex items-center gap-2 px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-xl text-amber-900 bg-amber-100/80 hover:bg-amber-200 border border-amber-300 shadow-sm hover:shadow transition active:scale-95 focus:outline-none focus:ring-2 focus:ring-amber-500">
-            <i id="syncIcon" data-lucide="refresh-cw" class="w-4 h-4 text-amber-700"></i>
-            <span>Refresh Drive</span>
+        <!-- Center & Right: Navigation Tabs matching the screenshot -->
+        <div class="flex flex-wrap items-center gap-2 sm:gap-2.5">
+          
+          <!-- Tab 1: Student & Parent Zone (Active by default) -->
+          <button id="tabStudentZone" class="nav-tab-active inline-flex items-center gap-2 px-3.5 py-2 rounded-2xl text-xs sm:text-sm font-bold transition active:scale-95">
+            <i data-lucide="book-open" class="w-4 h-4 text-amber-600"></i>
+            <span>Student & Parent Zone</span>
+            <span id="navTotalBadge" class="w-5 h-5 rounded-full bg-amber-100 text-amber-900 text-[11px] font-black flex items-center justify-center border border-amber-300">
+              41
+            </span>
           </button>
 
-          <!-- Open in Drive Button -->
-          <a id="openDriveFolderBtn" href="https://drive.google.com/drive/folders/1RFLDeE-RARKYF-7YlMRpALc5_HfjoFc5?usp=drive_link" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-3.5 py-2 text-xs sm:text-sm font-semibold rounded-xl text-white bg-gradient-to-r from-harvest-pine to-green-700 hover:from-green-800 hover:to-emerald-800 shadow-sm hover:shadow transition active:scale-95 focus:outline-none focus:ring-2 focus:ring-green-500">
-            <i data-lucide="external-link" class="w-4 h-4"></i>
-            <span class="hidden sm:inline">Google Drive</span>
-            <span class="sm:hidden">Drive</span>
+          <!-- Tab 2: Coverage Matrix / Staff Room -->
+          <button id="tabCoverageMatrix" class="nav-tab-inactive inline-flex items-center gap-2 px-3 py-2 rounded-2xl text-xs sm:text-sm font-semibold transition active:scale-95 border border-transparent hover:border-amber-200">
+            <i data-lucide="graduation-cap" class="w-4 h-4 text-slate-500"></i>
+            <span class="hidden md:inline">Coverage & Pending Status</span>
+            <span class="md:hidden">Status</span>
+          </button>
+
+          <!-- Tab 3: Admin & Cloud / Sync Status Pill (Pinkish as in screenshot) -->
+          <button id="syncDriveBtn" class="inline-flex items-center gap-1.5 px-3 py-2 rounded-2xl text-xs sm:text-sm font-bold text-rose-800 bg-rose-50 hover:bg-rose-100 border border-rose-200 transition active:scale-95 shadow-xs" title="Click to refresh live from Google Drive">
+            <i id="syncIcon" data-lucide="shield-check" class="w-4 h-4 text-rose-600"></i>
+            <span>Drive Live</span>
+            <span id="syncPulse" class="w-2 h-2 rounded-full bg-emerald-500 beacon-live ml-0.5"></span>
+          </button>
+
+          <!-- Print Button (Round circle icon as in screenshot) -->
+          <button id="printBtn" class="w-9 h-9 rounded-full bg-white hover:bg-slate-100 border border-slate-300 flex items-center justify-center text-slate-600 transition shadow-xs active:scale-95" title="Print Holiday Homework Docket">
+            <i data-lucide="printer" class="w-4 h-4"></i>
+          </button>
+
+          <!-- Orange CTA Button: Post / Open Drive (As in screenshot) -->
+          <a id="openDriveFolderBtn" href="https://drive.google.com/drive/folders/1RFLDeE-RARKYF-7YlMRpALc5_HfjoFc5?usp=drive_link" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold text-white bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-700 hover:to-amber-700 shadow-md shadow-orange-500/25 transition active:scale-95">
+            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+            <span>Open Drive</span>
           </a>
 
-          <!-- Print Checklist -->
-          <button id="printBtn" class="inline-flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm font-medium rounded-xl text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-300 transition active:scale-95">
-            <i data-lucide="printer" class="w-4 h-4 text-slate-600"></i>
-            <span class="hidden sm:inline">Print Docket</span>
-          </button>
         </div>
 
       </div>
@@ -134,11 +141,11 @@
   </header>
 
   <!-- PRINT ONLY HEADER -->
-  <div class="hidden print-only p-6 border-b-2 border-slate-900 mb-4">
+  <div class="hidden print-only p-6 border-b-2 border-slate-900 mb-4 bg-white">
     <div class="flex justify-between items-center">
       <div>
-        <h1 class="text-2xl font-black text-slate-900">CBSE Autumn Break Holiday Homework Docket</h1>
-        <p class="text-sm text-slate-600">October Vacation 2026 • Official School Assignment Plan</p>
+        <h1 class="text-2xl font-black text-slate-900">CBSE Autumn Break Holiday Homework Docket (October 2026)</h1>
+        <p class="text-sm text-slate-600">Vacation Period: 15/10/2026 to 25/10/2026 • Reopening Date: 26/10/2026 (08:00 AM)</p>
       </div>
       <div class="text-right">
         <div id="printClassBadge" class="text-lg font-bold text-amber-800">Class: All</div>
@@ -147,55 +154,266 @@
     </div>
   </div>
 
-  <!-- MAIN CONTAINER -->
-  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
+  <!-- MAIN WRAPPER -->
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full relative z-10">
 
-    <!-- HERO / DYNAMIC STAGE BANNER -->
-    <div id="stageBanner" class="mb-6 rounded-3xl bg-gradient-to-br from-amber-50 via-orange-50 to-emerald-50 border border-amber-200/80 p-5 sm:p-6 shadow-sm relative overflow-hidden transition-all duration-300">
-      <!-- Ambient autumn leaf watermark -->
-      <div class="absolute -right-8 -bottom-8 opacity-10 pointer-events-none text-amber-800">
-        <i data-lucide="leaf" class="w-48 h-48"></i>
+    <!-- HERO SECTION (MATCHING SCREENSHOT WITH REOPENING COUNTDOWN) -->
+    <div class="mb-8">
+      
+      <!-- Official CBSE pill -->
+      <div class="mb-3">
+        <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-bold text-amber-900 bg-amber-100/90 border border-amber-300 shadow-xs">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-700"></i>
+          Official CBSE Autumn Vacation Assignment Portal
+        </span>
       </div>
 
-      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 relative z-10">
+      <!-- Hero Grid: Left Content & Right Countdown Card -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        
+        <!-- Left: Headings, Subtitle, Quick Jumps & Stat Counters (7 cols) -->
+        <div class="lg:col-span-7 flex flex-col justify-between">
+          <div>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-black font-display text-slate-900 tracking-tight leading-none mb-1">
+              CBSE Autumn Break
+            </h2>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-black font-display text-harvest-orange tracking-tight leading-none mb-4">
+              Holiday Homework (October 2026)
+            </h2>
+
+            <p class="text-sm sm:text-base text-slate-600 leading-relaxed max-w-xl font-normal mb-5">
+              Welcome Students & Parents! Access subject-wise holiday assignments, downloadable worksheets, project guides, and direct teacher query assistance across Class 1 to Class 12.
+            </p>
+
+            <!-- QUICK JUMP PILLS -->
+            <div class="flex flex-wrap items-center gap-2 mb-6">
+              <span class="text-xs font-extrabold uppercase tracking-wider text-slate-600 mr-1">
+                QUICK JUMP:
+              </span>
+              <button data-jump="primary" class="quick-jump-primary px-3 py-1 rounded-xl text-xs font-bold transition active:scale-95 shadow-xs">
+                Primary (Cl 1-5)
+              </button>
+              <button data-jump="middle" class="quick-jump-middle px-3 py-1 rounded-xl text-xs font-bold transition active:scale-95 shadow-xs">
+                Middle (Cl 6-8)
+              </button>
+              <button data-jump="secondary" class="quick-jump-secondary px-3 py-1 rounded-xl text-xs font-bold transition active:scale-95 shadow-xs">
+                Secondary (Cl 9-10)
+              </button>
+              <button data-jump="senior" class="quick-jump-senior px-3 py-1 rounded-xl text-xs font-bold transition active:scale-95 shadow-xs">
+                Sr Sec (Cl 11-12)
+              </button>
+            </div>
+          </div>
+
+          <!-- BOTTOM STAT COUNTER CARDS (EXACTLY AS IN SCREENSHOT + UPLOADED VS PENDING METRICS) -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+            
+            <!-- Card 1: Uploaded Assignments -->
+            <div class="stat-card rounded-2xl p-3.5 text-center">
+              <div id="heroUploadedCount" class="text-2xl sm:text-3xl font-black text-amber-900 font-display">
+                41
+              </div>
+              <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mt-0.5">
+                ASSIGNMENTS UPLOADED
+              </div>
+              <div class="text-[10px] font-bold text-emerald-700 flex items-center justify-center gap-1 mt-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Live in Drive
+              </div>
+            </div>
+
+            <!-- Card 2: Classes Covered -->
+            <div class="stat-card rounded-2xl p-3.5 text-center">
+              <div class="text-2xl sm:text-3xl font-black text-amber-900 font-display">
+                12
+              </div>
+              <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mt-0.5">
+                CLASSES COVERED
+              </div>
+              <div class="text-[10px] font-semibold text-slate-400 mt-1">
+                Class 1 to 12
+              </div>
+            </div>
+
+            <!-- Card 3: Worksheets / Files -->
+            <div class="stat-card rounded-2xl p-3.5 text-center">
+              <div id="heroFilesCount" class="text-2xl sm:text-3xl font-black text-emerald-700 font-display">
+                41
+              </div>
+              <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mt-0.5">
+                WORKSHEETS / FILES
+              </div>
+              <div class="text-[10px] font-semibold text-emerald-600 mt-1">
+                PDF • DOCX • Sheets
+              </div>
+            </div>
+
+            <!-- Card 4: Pending Teacher Uploads (Explicitly requested by user) -->
+            <div class="stat-card rounded-2xl p-3.5 text-center border-orange-200">
+              <div id="heroPendingCount" class="text-2xl sm:text-3xl font-black text-orange-600 font-display">
+                60
+              </div>
+              <div class="text-[11px] font-bold text-slate-500 uppercase tracking-wider mt-0.5">
+                PENDING SUBJECTS
+              </div>
+              <div class="text-[10px] font-semibold text-orange-700 mt-1">
+                Awaiting Upload
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Right: DARK NAVY REOPENING COUNTDOWN CARD (5 cols) -->
+        <div class="lg:col-span-5 flex flex-col">
+          <div class="countdown-container rounded-3xl p-5 sm:p-6 text-white flex flex-col justify-between h-full shadow-2xl relative overflow-hidden">
+            
+            <!-- Top Card Header -->
+            <div>
+              <div class="flex items-center justify-between gap-3 mb-2">
+                <div class="flex items-center gap-3">
+                  <div class="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center border border-amber-500/30">
+                    <i data-lucide="clock" class="w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <h3 class="text-base sm:text-lg font-bold text-white tracking-tight">
+                      School Reopening Countdown
+                    </h3>
+                    <p class="text-xs text-slate-400">
+                      Target Date: <span class="text-amber-300 font-semibold">Oct 26, 2026 • 08:00 AM</span>
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Late Oct 2026 Pill -->
+                <span class="px-2.5 py-1 rounded-md text-[10px] font-extrabold uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-400/30">
+                  LATE OCT 2026
+                </span>
+              </div>
+
+              <!-- Vacation Date Banner -->
+              <div class="bg-amber-500/10 border border-amber-400/20 rounded-xl px-3 py-1.5 my-3 flex items-center justify-between text-xs text-amber-200">
+                <span class="flex items-center gap-1.5 font-semibold">
+                  <i data-lucide="calendar" class="w-3.5 h-3.5 text-amber-400"></i>
+                  Autumn Vacation Period:
+                </span>
+                <span class="font-bold text-white">15/10/2026 to 25/10/2026</span>
+              </div>
+
+              <!-- 4 Live Countdown Digit Boxes -->
+              <div class="grid grid-cols-4 gap-2 sm:gap-2.5 my-4">
+                
+                <!-- DAYS -->
+                <div class="countdown-tile rounded-2xl p-3 text-center">
+                  <div id="countDays" class="text-2xl sm:text-3xl font-black text-amber-400 font-mono tracking-tight">
+                    11
+                  </div>
+                  <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mt-1">
+                    DAYS
+                  </div>
+                </div>
+
+                <!-- HOURS -->
+                <div class="countdown-tile rounded-2xl p-3 text-center">
+                  <div id="countHours" class="text-2xl sm:text-3xl font-black text-amber-400 font-mono tracking-tight">
+                    20
+                  </div>
+                  <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mt-1">
+                    HOURS
+                  </div>
+                </div>
+
+                <!-- MINS -->
+                <div class="countdown-tile rounded-2xl p-3 text-center">
+                  <div id="countMins" class="text-2xl sm:text-3xl font-black text-amber-400 font-mono tracking-tight">
+                    36
+                  </div>
+                  <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mt-1">
+                    MINS
+                  </div>
+                </div>
+
+                <!-- SECS -->
+                <div class="countdown-tile rounded-2xl p-3 text-center">
+                  <div id="countSecs" class="text-2xl sm:text-3xl font-black text-amber-400 font-mono tracking-tight">
+                    08
+                  </div>
+                  <div class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest mt-1">
+                    SECS
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Submission Notice Box (Matching Screenshot) -->
+            <div class="mt-2 bg-gradient-to-r from-amber-950/60 to-slate-900/80 border border-amber-500/30 rounded-2xl p-3.5 flex items-start gap-3">
+              <div class="w-6 h-6 rounded-full bg-amber-500/20 text-amber-400 flex items-center justify-center flex-shrink-0 mt-0.5 border border-amber-500/40">
+                <i data-lucide="check" class="w-3.5 h-3.5"></i>
+              </div>
+              <p class="text-[11px] sm:text-xs text-amber-100/90 leading-relaxed">
+                <strong class="text-amber-300 font-bold">Submission Notice:</strong> All practical files, scrapbooks, and worksheets must be submitted to respective subject teachers on the first day of school reopening.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- UPLOADED VS PENDING STATUS DETAIL BAR (USER SPECIFIC FEATURE) -->
+    <div id="uploadPendingStatusBar" class="mb-6 bg-white rounded-2xl border border-amber-200/90 p-4 sm:p-5 shadow-xs">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        
         <div>
-          <div class="flex items-center gap-2 mb-2">
-            <span id="tierBadge" class="px-3 py-0.5 rounded-full text-xs font-bold uppercase tracking-wide bg-amber-600 text-white shadow-xs">
-              All Classes 1 to 12
-            </span>
-            <span id="curriculumTag" class="text-xs font-medium text-amber-900 flex items-center gap-1">
-              <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-600"></i>
-              CBSE Academic Guidelines 2026-27
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+            <h3 class="text-sm sm:text-base font-extrabold text-slate-900">
+              CBSE Assignment Upload Status Breakdown
+            </h3>
+            <span id="activeClassLabelBadge" class="text-xs font-bold px-2 py-0.5 rounded-md bg-amber-100 text-amber-900">
+              All Classes (1 to 12)
             </span>
           </div>
-          <h2 id="tierTitle" class="text-xl sm:text-2xl font-bold font-display text-slate-900">
-            Welcome to the Autumn Break Holiday Homework Portal
-          </h2>
-          <p id="tierDescription" class="mt-1 text-sm text-slate-600 max-w-2xl leading-relaxed">
-            Select your class and section below to explore subject-wise homework sheets, experiential activities, and practice assignments. All files are synchronized live with the official school Google Drive folder.
+          <p class="text-xs text-slate-500 mt-0.5">
+            Real-time tracking of uploaded homework files vs curriculum subjects awaiting teacher upload in Google Drive.
           </p>
         </div>
 
-        <!-- Quick Stats & Student Checklist Summary -->
-        <div class="flex flex-wrap sm:flex-nowrap items-center gap-3 bg-white/80 backdrop-blur-sm p-3.5 rounded-2xl border border-amber-200/60 shadow-xs lg:min-w-[320px]">
-          <div class="flex-1">
-            <div class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Your Progress</div>
-            <div class="flex items-baseline gap-2 mt-0.5">
-              <span id="progressCount" class="text-2xl font-extrabold text-amber-700">0 / 0</span>
-              <span id="progressPercent" class="text-xs font-semibold text-slate-600 bg-amber-100 px-2 py-0.5 rounded-full">0% Done</span>
-            </div>
-            <!-- Progress bar -->
-            <div class="w-full bg-slate-200 rounded-full h-2 mt-2 overflow-hidden">
-              <div id="progressBar" class="bg-gradient-to-r from-amber-500 to-emerald-600 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
-            </div>
-          </div>
-          <div class="border-l border-amber-200 pl-3">
-            <div class="text-[11px] text-slate-500">Live Files</div>
-            <div id="totalFilesBadge" class="text-xl font-black text-slate-800">41</div>
-            <div class="text-[10px] text-emerald-700 font-medium">In Drive</div>
-          </div>
+        <!-- Filter Pill Toggle: Show All | Uploaded Only | Pending Only -->
+        <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl self-start md:self-center text-xs">
+          <button id="filterStatusAll" class="px-3 py-1.5 rounded-lg font-bold bg-white text-slate-800 shadow-xs transition">
+            All Items (<span id="statusAllCount">101</span>)
+          </button>
+          <button id="filterStatusUploaded" class="px-3 py-1.5 rounded-lg font-semibold text-emerald-800 hover:bg-white/60 transition">
+            ✓ Uploaded (<span id="statusUploadedCount">41</span>)
+          </button>
+          <button id="filterStatusPending" class="px-3 py-1.5 rounded-lg font-semibold text-orange-800 hover:bg-white/60 transition">
+            ⏳ Pending (<span id="statusPendingCount">60</span>)
+          </button>
         </div>
 
+      </div>
+
+      <!-- Class-wise Upload Progress Visualizer -->
+      <div class="mt-4 pt-3 border-t border-slate-100">
+        <div class="flex items-center justify-between text-xs font-semibold mb-1.5">
+          <span class="text-slate-600">Curriculum Subject Upload Coverage:</span>
+          <span id="coveragePercentText" class="text-amber-800 font-bold">41% Uploaded</span>
+        </div>
+        <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden flex">
+          <div id="coverageUploadedBar" class="bg-emerald-600 h-full transition-all duration-500" style="width: 41%" title="Uploaded"></div>
+          <div id="coveragePendingBar" class="bg-amber-400/80 h-full transition-all duration-500" style="width: 59%" title="Pending Upload"></div>
+        </div>
+        <div class="flex items-center justify-between text-[11px] text-slate-400 mt-1.5">
+          <span class="flex items-center gap-1 text-emerald-700 font-semibold">
+            <span class="w-2 h-2 rounded-full bg-emerald-600"></span> <span id="barUploadedLabel">41 Uploaded</span>
+          </span>
+          <span class="flex items-center gap-1 text-amber-700 font-semibold">
+            <span class="w-2 h-2 rounded-full bg-amber-400"></span> <span id="barPendingLabel">60 Pending Upload / Revision</span>
+          </span>
+        </div>
       </div>
     </div>
 
@@ -203,27 +421,27 @@
     <div class="mb-5 no-print">
       <div class="flex items-center justify-between mb-2">
         <label class="text-xs font-bold uppercase tracking-wider text-amber-900 flex items-center gap-1.5">
-          <i data-lucide="layers" class="w-3.5 h-3.5 text-amber-700"></i> Quick Class Navigator
+          <i data-lucide="layers" class="w-3.5 h-3.5 text-amber-700"></i> Class Navigator
         </label>
-        <span class="text-xs text-slate-500">Tap to instantly switch class</span>
+        <span class="text-xs text-slate-500">Tap to filter specific class</span>
       </div>
       <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none scroll-smooth" id="classPillsContainer">
-        <!-- Will be dynamically rendered -->
+        <!-- Rendered dynamically -->
       </div>
     </div>
 
     <!-- ADVANCED FILTER & SEARCH PANEL -->
-    <div class="bg-white rounded-2xl border border-amber-200/80 p-4 sm:p-5 shadow-sm mb-6 no-print">
+    <div class="bg-white rounded-2xl border border-amber-200/90 p-4 sm:p-5 shadow-xs mb-6 no-print">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         
         <!-- 1. Class Dropdown (Class 1 to 12) -->
         <div>
           <label for="classSelect" class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
             <i data-lucide="graduation-cap" class="w-4 h-4 text-amber-600"></i>
-            Select Class <span class="text-red-500">*</span>
+            Select Class
           </label>
           <div class="relative">
-            <select id="classSelect" class="w-full bg-harvest-linen/60 border border-amber-300 text-slate-800 text-sm font-semibold rounded-xl px-3 py-2.5 pr-8 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 focus:bg-white transition cursor-pointer appearance-none shadow-xs">
+            <select id="classSelect" class="w-full bg-harvest-linen/50 border border-amber-300 text-slate-800 text-sm font-bold rounded-xl px-3 py-2.5 pr-8 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 focus:bg-white transition cursor-pointer appearance-none shadow-2xs">
               <option value="all">All Classes (1 to 12)</option>
               <optgroup label="Primary Wing (Classes 1 - 5)">
                 <option value="1">Class 1 (Grade I)</option>
@@ -259,7 +477,7 @@
             Section
           </label>
           <div class="relative">
-            <select id="sectionSelect" class="w-full bg-harvest-linen/60 border border-amber-300 text-slate-800 text-sm font-semibold rounded-xl px-3 py-2.5 pr-8 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 focus:bg-white transition cursor-pointer appearance-none shadow-xs">
+            <select id="sectionSelect" class="w-full bg-harvest-linen/50 border border-amber-300 text-slate-800 text-sm font-bold rounded-xl px-3 py-2.5 pr-8 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 focus:bg-white transition cursor-pointer appearance-none shadow-2xs">
               <option value="all">All Sections (A, B, C, D)</option>
               <option value="A">Section A</option>
               <option value="B">Section B</option>
@@ -279,9 +497,9 @@
             Subject <span id="subjectTierIndicator" class="text-[10px] text-amber-700 font-normal lowercase">(dynamic)</span>
           </label>
           <div class="relative">
-            <select id="subjectSelect" class="w-full bg-harvest-linen/60 border border-amber-300 text-slate-800 text-sm font-semibold rounded-xl px-3 py-2.5 pr-8 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 focus:bg-white transition cursor-pointer appearance-none shadow-xs">
+            <select id="subjectSelect" class="w-full bg-harvest-linen/50 border border-amber-300 text-slate-800 text-sm font-bold rounded-xl px-3 py-2.5 pr-8 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 focus:bg-white transition cursor-pointer appearance-none shadow-2xs">
               <option value="all">All Subjects</option>
-              <!-- Will be loaded dynamically based on selected class -->
+              <!-- Dynamic subjects -->
             </select>
             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-amber-700">
               <i data-lucide="chevron-down" class="w-4 h-4"></i>
@@ -296,7 +514,7 @@
             Search Homework
           </label>
           <div class="relative">
-            <input type="text" id="searchInput" placeholder="Search math, english, cbq..." class="w-full bg-harvest-linen/60 border border-amber-300 text-slate-800 text-sm rounded-xl pl-9 pr-3 py-2.5 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 focus:bg-white transition shadow-xs">
+            <input type="text" id="searchInput" placeholder="Search math, chemistry, cbq..." class="w-full bg-harvest-linen/50 border border-amber-300 text-slate-800 text-sm font-medium rounded-xl pl-9 pr-3 py-2.5 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 focus:bg-white transition shadow-2xs">
             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-amber-700">
               <i data-lucide="search" class="w-4 h-4 text-slate-400"></i>
             </div>
@@ -305,27 +523,27 @@
 
       </div>
 
-      <!-- Filter Bar Secondary Toolbar -->
+      <!-- Filter Secondary Toolbar -->
       <div class="flex flex-wrap items-center justify-between gap-3 mt-4 pt-3 border-t border-slate-100 text-xs">
         <div class="flex items-center gap-2">
           <span class="text-slate-500 font-medium">View Mode:</span>
-          <button id="viewGridBtn" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-amber-600 text-white font-semibold shadow-xs">
+          <button id="viewGridBtn" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-amber-600 text-white font-bold shadow-xs">
             <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i> Cards
           </button>
           <button id="viewDocketBtn" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium">
-            <i data-lucide="list-checks" class="w-3.5 h-3.5"></i> Subject Checklist
+            <i data-lucide="list-checks" class="w-3.5 h-3.5"></i> Subject Docket & Pending
           </button>
           <button id="viewTableBtn" class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium">
-            <i data-lucide="table" class="w-3.5 h-3.5"></i> Compact List
+            <i data-lucide="table" class="w-3.5 h-3.5"></i> Compact Table
           </button>
         </div>
 
         <div class="flex items-center gap-2">
-          <button id="resetFiltersBtn" class="inline-flex items-center gap-1 text-slate-500 hover:text-amber-800 underline">
+          <button id="resetFiltersBtn" class="inline-flex items-center gap-1 text-slate-500 hover:text-amber-800 underline font-medium">
             <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Reset Filters
           </button>
           <span class="text-slate-300">|</span>
-          <span id="resultsCountBadge" class="font-bold text-amber-900 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-md">
+          <span id="resultsCountBadge" class="font-bold text-amber-900 bg-amber-50 border border-amber-200 px-2.5 py-0.5 rounded-md">
             Showing 41 Homework Items
           </span>
         </div>
@@ -333,17 +551,17 @@
 
     </div>
 
-    <!-- CURRICULUM SUBJECT STATUS DOCKET (DYNAMIC SUMMARY ACCORDING TO USER PROMPT) -->
-    <div id="subjectDocketSection" class="hidden mb-6 bg-white rounded-2xl border border-amber-200/80 p-5 shadow-sm">
+    <!-- CURRICULUM SUBJECT STATUS DOCKET SECTION -->
+    <div id="subjectDocketSection" class="hidden mb-6 bg-white rounded-2xl border border-amber-200/90 p-5 shadow-xs">
       <div class="flex items-center justify-between mb-4">
         <div>
           <h3 class="text-base font-bold text-slate-900 flex items-center gap-2">
             <i data-lucide="check-square" class="w-5 h-5 text-amber-600"></i>
-            <span id="docketTitle">CBSE Curriculum Subject Docket</span>
+            <span id="docketTitle">CBSE Curriculum Subject Coverage & Pending Docket</span>
           </h3>
-          <p class="text-xs text-slate-500">Subject coverage checklist according to official CBSE allocation for this class level.</p>
+          <p class="text-xs text-slate-500">Official subject checklist indicating which subjects have assignments uploaded vs pending teacher release.</p>
         </div>
-        <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800">
+        <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-amber-100 text-amber-900 border border-amber-200">
           Official Subject Breakdown
         </span>
       </div>
@@ -355,19 +573,19 @@
 
     <!-- HOMEWORK CARDS GRID -->
     <div id="cardsView" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-      <!-- Dynamic Homework Cards will be rendered here -->
+      <!-- Dynamic Homework Cards -->
     </div>
 
-    <!-- HOMEWORK COMPACT TABLE VIEW (ALTERNATIVE VIEW) -->
-    <div id="tableView" class="hidden bg-white rounded-2xl border border-amber-200/80 shadow-sm overflow-hidden">
+    <!-- HOMEWORK COMPACT TABLE VIEW -->
+    <div id="tableView" class="hidden bg-white rounded-2xl border border-amber-200/90 shadow-xs overflow-hidden">
       <div class="overflow-x-auto">
         <table class="w-full text-left text-sm text-slate-700">
-          <thead class="bg-amber-50/70 text-xs font-bold text-amber-900 uppercase tracking-wider border-b border-amber-200">
+          <thead class="bg-amber-50/80 text-xs font-bold text-amber-900 uppercase tracking-wider border-b border-amber-200">
             <tr>
-              <th scope="col" class="py-3 px-4">Status</th>
+              <th scope="col" class="py-3 px-4">Done</th>
               <th scope="col" class="py-3 px-4">Class & Sec</th>
               <th scope="col" class="py-3 px-4">Subject</th>
-              <th scope="col" class="py-3 px-4">Homework Title</th>
+              <th scope="col" class="py-3 px-4">Assignment Title</th>
               <th scope="col" class="py-3 px-4">Type</th>
               <th scope="col" class="py-3 px-4">Modified</th>
               <th scope="col" class="py-3 px-4 text-right">Actions</th>
@@ -381,38 +599,38 @@
     </div>
 
     <!-- EMPTY STATE -->
-    <div id="emptyState" class="hidden text-center py-16 px-4 bg-white rounded-3xl border border-amber-200 shadow-sm">
+    <div id="emptyState" class="hidden text-center py-16 px-4 bg-white rounded-3xl border border-amber-200 shadow-xs">
       <div class="w-16 h-16 bg-amber-100 text-amber-700 rounded-full flex items-center justify-center mx-auto mb-4">
         <i data-lucide="file-question" class="w-8 h-8"></i>
       </div>
       <h3 class="text-lg font-bold text-slate-900 mb-1">No Holiday Homework Found</h3>
       <p id="emptyStateMsg" class="text-sm text-slate-500 max-w-md mx-auto mb-6">
-        No assignments match the selected class, section, or subject filter. The teacher might upload it soon to Google Drive.
+        No assignments match the selected class, section, or subject filter.
       </p>
       <div class="flex items-center justify-center gap-3">
-        <button onclick="document.getElementById('resetFiltersBtn').click()" class="px-4 py-2 text-xs font-semibold rounded-xl bg-amber-600 text-white hover:bg-amber-700 shadow-xs transition">
+        <button onclick="document.getElementById('resetFiltersBtn').click()" class="px-4 py-2 text-xs font-bold rounded-xl bg-amber-600 text-white hover:bg-amber-700 shadow-xs transition">
           Reset All Filters
         </button>
-        <button onclick="document.getElementById('syncDriveBtn').click()" class="px-4 py-2 text-xs font-semibold rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-300 transition">
+        <button onclick="document.getElementById('syncDriveBtn').click()" class="px-4 py-2 text-xs font-bold rounded-xl bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-300 transition">
           Refresh Google Drive
         </button>
       </div>
     </div>
 
-    <!-- GENERAL AUTUMN BREAK GUIDELINES & INSTRUCTIONS ACCORDION -->
-    <section class="mt-12 bg-white rounded-3xl border border-amber-200/80 p-6 shadow-sm no-print">
+    <!-- GENERAL AUTUMN BREAK GUIDELINES ACCORDION -->
+    <section class="mt-12 bg-white rounded-3xl border border-amber-200/90 p-6 shadow-xs no-print">
       <div class="flex items-center gap-3 mb-4">
         <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center">
           <i data-lucide="info" class="w-5 h-5"></i>
         </div>
         <div>
-          <h3 class="text-lg font-bold text-slate-900 font-display">CBSE Autumn Break Guidelines & Instructions (October 2026)</h3>
+          <h3 class="text-lg font-bold text-slate-900 font-display">CBSE Autumn Vacation Guidelines (15/10/2026 to 25/10/2026)</h3>
           <p class="text-xs text-slate-500">General instructions for students and parents for meaningful autumn vacation learning</p>
         </div>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
-        <div class="p-4 rounded-2xl bg-amber-50/50 border border-amber-200/60">
+        <div class="p-4 rounded-2xl bg-amber-50/50 border border-amber-200/70">
           <div class="flex items-center gap-2 text-amber-900 font-bold text-sm mb-2">
             <i data-lucide="edit-3" class="w-4 h-4 text-amber-700"></i>
             Neatness & Presentation
@@ -422,7 +640,7 @@
           </p>
         </div>
 
-        <div class="p-4 rounded-2xl bg-orange-50/50 border border-orange-200/60">
+        <div class="p-4 rounded-2xl bg-orange-50/50 border border-orange-200/70">
           <div class="flex items-center gap-2 text-orange-900 font-bold text-sm mb-2">
             <i data-lucide="palette" class="w-4 h-4 text-orange-700"></i>
             Art-Integrated Learning
@@ -432,10 +650,10 @@
           </p>
         </div>
 
-        <div class="p-4 rounded-2xl bg-emerald-50/50 border border-emerald-200/60">
+        <div class="p-4 rounded-2xl bg-emerald-50/50 border border-emerald-200/70">
           <div class="flex items-center gap-2 text-emerald-900 font-bold text-sm mb-2">
             <i data-lucide="calendar-check" class="w-4 h-4 text-emerald-700"></i>
-            Submission & Assessment
+            Reopening Submission (26/10/2026)
           </div>
           <p class="text-xs text-slate-600 leading-relaxed">
             Holiday homework carries weightage in Internal Assessment / Portfolio evaluation. Please submit your assignments promptly on school reopening day after Autumn Break.
@@ -472,11 +690,11 @@
 
         <!-- Modal Toolbar -->
         <div class="flex items-center gap-2 flex-shrink-0">
-          <a id="modalDownloadBtn" href="#" target="_blank" download class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl text-white bg-amber-600 hover:bg-amber-700 shadow-xs transition">
+          <a id="modalDownloadBtn" href="#" target="_blank" download class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-xl text-white bg-amber-600 hover:bg-amber-700 shadow-xs transition">
             <i data-lucide="download" class="w-3.5 h-3.5"></i>
             <span class="hidden sm:inline">Download</span>
           </a>
-          <a id="modalDriveBtn" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl text-emerald-800 bg-emerald-100 hover:bg-emerald-200 transition">
+          <a id="modalDriveBtn" href="#" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-xl text-emerald-800 bg-emerald-100 hover:bg-emerald-200 transition">
             <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
             <span class="hidden sm:inline">Open Drive</span>
           </a>
@@ -486,17 +704,15 @@
         </div>
       </div>
 
-      <!-- Modal Body (Iframe / Image Previewer) -->
+      <!-- Modal Body -->
       <div class="flex-grow bg-slate-900 relative overflow-hidden flex items-center justify-center">
-        <!-- Spinner while loading iframe -->
         <div id="modalSpinner" class="absolute inset-0 flex flex-col items-center justify-center bg-slate-900 text-white z-0">
           <div class="w-10 h-10 border-4 border-amber-500 border-t-transparent rounded-full animate-spin mb-3"></div>
-          <span class="text-xs text-amber-200">Loading document from Google Drive...</span>
+          <span class="text-xs text-amber-200 font-medium">Loading document from Google Drive...</span>
         </div>
 
         <iframe id="previewIframe" class="w-full h-full border-0 relative z-10" allow="fullscreen" sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
 
-        <!-- Direct Image View Container (when previewing image homework sheets) -->
         <div id="imagePreviewContainer" class="hidden absolute inset-0 z-10 overflow-auto flex items-center justify-center p-4 bg-slate-950">
           <img id="imagePreview" src="" alt="Homework Sheet Preview" class="max-w-full max-h-full object-contain rounded-lg shadow-2xl">
         </div>
@@ -505,7 +721,7 @@
       <!-- Modal Footer -->
       <div class="px-5 py-2.5 bg-white border-t border-slate-200 flex items-center justify-between text-xs text-slate-500">
         <span id="modalDescription" class="truncate">Preview rendered from Google Drive official server</span>
-        <span class="text-slate-400 text-[11px] flex-shrink-0 ml-2">Tip: Press ESC to exit</span>
+        <span class="text-slate-400 text-[11px] flex-shrink-0 ml-2">Press ESC to exit</span>
       </div>
 
     </div>
@@ -513,7 +729,6 @@
 
   <!-- TOAST NOTIFICATION CONTAINER -->
   <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none no-print">
-    <!-- Toasts inserted dynamically -->
   </div>
 
   <!-- FOOTER -->
@@ -525,12 +740,12 @@
             <span class="text-amber-400">🍂</span> CBSE Autumn Break Holiday Homework Portal (October 2026)
           </div>
           <p class="text-[11px] text-slate-500 mt-1">
-            Dynamic repository integrated directly with Google Drive Folder: <span class="text-slate-400 font-mono">1RFLDeE-RARKYF-7YlMRpALc5_HfjoFc5</span>
+            Vacation Period: <span class="text-amber-300 font-semibold">15/10/2026 to 25/10/2026</span> • School Reopening: <span class="text-emerald-300 font-semibold">26/10/2026 (08:00 AM)</span>
           </p>
         </div>
         <div class="flex flex-wrap items-center gap-4 text-xs">
           <a href="https://drive.google.com/drive/folders/1RFLDeE-RARKYF-7YlMRpALc5_HfjoFc5?usp=drive_link" target="_blank" rel="noopener noreferrer" class="hover:text-amber-400 transition flex items-center gap-1">
-            <i data-lucide="folder" class="w-3.5 h-3.5"></i> Drive Folder
+            <i data-lucide="folder" class="w-3.5 h-3.5"></i> Master Google Drive
           </a>
           <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="hover:text-amber-400 transition flex items-center gap-1">
             <i data-lucide="arrow-up" class="w-3.5 h-3.5"></i> Back to Top
@@ -538,8 +753,8 @@
         </div>
       </div>
       <div class="mt-6 pt-6 border-t border-slate-800 text-[11px] text-slate-600 flex flex-col sm:flex-row items-center justify-between gap-2">
-        <span>© October 2026 CBSE Autumn Vacation Academic Desk • All Rights Reserved</span>
-        <span>Designed for Students (Classes 1–12), Parents & Faculty Members</span>
+        <span>© October 2026 CBSE Academic Wing • Connected to Drive Repository: 1RFLDeE-RARKYF-7YlMRpALc5_HfjoFc5</span>
+        <span>Reopening Countdown Live Engine</span>
       </div>
     </div>
   </footer>

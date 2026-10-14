@@ -1,6 +1,6 @@
 /**
  * CBSE Autumn Break Holiday Homework Portal (October 2026)
- * High Performance Client-Side Controller & Drive Sync Integration
+ * Real-time Google Drive Sync, Reopening Countdown & Coverage Tracker
  */
 
 // Official CBSE Curriculum Subject mapping as specified in instructions
@@ -19,41 +19,9 @@ const CURRICULUM_SUBJECTS = {
   ]
 };
 
-// Stage banner metadata
-const STAGE_INFO = {
-  all: {
-    tier: 'All Classes (1 to 12)',
-    badgeClass: 'bg-amber-600 text-white',
-    title: 'Autumn Break Holiday Homework Portal (October 2026)',
-    description: 'Centralized assignment desk for all CBSE classes. Filter by your class, section, and subject to access homework sheets, project guides, and practice modules.'
-  },
-  primary: {
-    tier: 'Primary Wing (Classes 1 - 5)',
-    badgeClass: 'bg-emerald-600 text-white',
-    title: 'Primary Wing: Experiential & Joyful Learning Activities',
-    description: 'Nurturing foundational literacy, numeracy, and curiosity. Activities include cursive handwriting, craft projects (TWAU recycled boats), foundational math, and creative expression.'
-  },
-  middle: {
-    tier: 'Middle Wing (Classes 6 - 8)',
-    badgeClass: 'bg-orange-600 text-white',
-    title: 'Middle Wing: Exploratory & Skill Development Assignments',
-    description: 'Strengthening analytical thinking and language proficiency across English, Hindi, Sanskrit, Telugu, Mathematics, Science, Social Science, and AI Foundation.'
-  },
-  secondary: {
-    tier: 'Secondary Wing (Classes 9 - 10)',
-    badgeClass: 'bg-indigo-600 text-white',
-    title: 'Secondary Desk: CBSE Board & Competency Preparation',
-    description: 'Curated Autumn assignments with Case-Based Questions (CBQ), Science practical concepts (Physics, Chemistry, Biology), Mathematics problem sets, and Artificial Intelligence.'
-  },
-  seniorSecondary: {
-    tier: 'Senior Secondary (Classes 11 - 12)',
-    badgeClass: 'bg-rose-700 text-white',
-    title: 'Senior Secondary Desk: Advanced Practice & Pre-Board Preparation',
-    description: 'Rigorous holiday assignments designed for CBSE Board & Entrance preparation across Physics, Chemistry, Biology, Mathematics, CS, AI, and Core Languages.'
-  }
-};
+// Target Reopening Date: October 26, 2026 at 08:00:00 AM IST (Vacation is 15/10/2026 to 25/10/2026)
+const REOPENING_TARGET_TIME = new Date('2026-10-26T08:00:00+05:30').getTime();
 
-// Lucide Icon Name Map for subjects
 function getSubjectLucideIcon(subject) {
   const s = (subject || '').toLowerCase();
   if (s.includes('physics')) return 'atom';
@@ -67,7 +35,6 @@ function getSubjectLucideIcon(subject) {
   return 'book-open'; // Languages: English, Hindi, Sanskrit, Telugu
 }
 
-// Inline SVG Icon generator as fallback / instant renderer
 function renderIconSvg(name, extraClasses = 'w-5 h-5') {
   const icons = {
     'atom': `<svg xmlns="http://www.w3.org/2000/svg" class="${extraClasses}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><path d="M20.2 20.2c2.04-2.03.02-7.36-4.5-11.9-4.54-4.52-9.87-6.54-11.9-4.5-2.04 2.03-.02 7.36 4.5 11.9 4.54 4.52 9.87 6.54 11.9 4.5Z"/><path d="M15.7 8.3c4.52-4.54 6.54-9.87 4.5-11.9-2.03-2.04-7.36-.02-11.9 4.5-4.52 4.54-6.54 9.87-4.5 11.9 2.03 2.04 7.36.02 11.9-4.5Z"/></svg>`,
@@ -88,7 +55,6 @@ function renderIconSvg(name, extraClasses = 'w-5 h-5') {
   return icons[name] || icons['book-open'];
 }
 
-// App State
 class HomeworkPortalApp {
   constructor() {
     this.homeworkList = [];
@@ -98,11 +64,14 @@ class HomeworkPortalApp {
     this.selectedClass = 'all';
     this.selectedSection = 'all';
     this.selectedSubject = 'all';
+    this.selectedStatusFilter = 'all'; // 'all' | 'uploaded' | 'pending'
     this.searchQuery = '';
     this.currentViewMode = 'grid'; // 'grid' | 'docket' | 'table'
     this.completedItems = new Set();
+    this.isSyncing = false;
 
     this.initElements();
+    this.startCountdownTimer();
     this.loadCompletedFromStorage();
     this.bindEvents();
     this.renderClassPills();
@@ -124,17 +93,38 @@ class HomeworkPortalApp {
     this.docketTitle = document.getElementById('docketTitle');
     this.emptyState = document.getElementById('emptyState');
     this.classPillsContainer = document.getElementById('classPillsContainer');
-    this.lastSyncLabel = document.getElementById('lastSyncLabel');
     this.syncDriveBtn = document.getElementById('syncDriveBtn');
     this.syncIcon = document.getElementById('syncIcon');
-    this.stageBanner = document.getElementById('stageBanner');
-    this.tierBadge = document.getElementById('tierBadge');
-    this.tierTitle = document.getElementById('tierTitle');
-    this.tierDescription = document.getElementById('tierDescription');
-    this.progressCount = document.getElementById('progressCount');
-    this.progressPercent = document.getElementById('progressPercent');
-    this.progressBar = document.getElementById('progressBar');
-    this.totalFilesBadge = document.getElementById('totalFilesBadge');
+    this.navTotalBadge = document.getElementById('navTotalBadge');
+
+    // Countdown elements
+    this.countDays = document.getElementById('countDays');
+    this.countHours = document.getElementById('countHours');
+    this.countMins = document.getElementById('countMins');
+    this.countSecs = document.getElementById('countSecs');
+
+    // Hero stat cards
+    this.heroUploadedCount = document.getElementById('heroUploadedCount');
+    this.heroFilesCount = document.getElementById('heroFilesCount');
+    this.heroPendingCount = document.getElementById('heroPendingCount');
+
+    // Uploaded vs Pending Status Bar elements
+    this.activeClassLabelBadge = document.getElementById('activeClassLabelBadge');
+    this.statusAllCount = document.getElementById('statusAllCount');
+    this.statusUploadedCount = document.getElementById('statusUploadedCount');
+    this.statusPendingCount = document.getElementById('statusPendingCount');
+    this.filterStatusAll = document.getElementById('filterStatusAll');
+    this.filterStatusUploaded = document.getElementById('filterStatusUploaded');
+    this.filterStatusPending = document.getElementById('filterStatusPending');
+    this.coveragePercentText = document.getElementById('coveragePercentText');
+    this.coverageUploadedBar = document.getElementById('coverageUploadedBar');
+    this.coveragePendingBar = document.getElementById('coveragePendingBar');
+    this.barUploadedLabel = document.getElementById('barUploadedLabel');
+    this.barPendingLabel = document.getElementById('barPendingLabel');
+
+    // Top Tabs
+    this.tabStudentZone = document.getElementById('tabStudentZone');
+    this.tabCoverageMatrix = document.getElementById('tabCoverageMatrix');
 
     // Modal elements
     this.previewModal = document.getElementById('previewModal');
@@ -159,6 +149,29 @@ class HomeworkPortalApp {
     this.viewTableBtn = document.getElementById('viewTableBtn');
     this.resetFiltersBtn = document.getElementById('resetFiltersBtn');
     this.printBtn = document.getElementById('printBtn');
+  }
+
+  // School Reopening Live Countdown Timer
+  startCountdownTimer() {
+    const update = () => {
+      const now = Date.now();
+      const diff = Math.max(0, REOPENING_TARGET_TIME - now);
+
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+      const pad = (n) => String(n).padStart(2, '0');
+
+      if (this.countDays) this.countDays.textContent = pad(days);
+      if (this.countHours) this.countHours.textContent = pad(hours);
+      if (this.countMins) this.countMins.textContent = pad(mins);
+      if (this.countSecs) this.countSecs.textContent = pad(secs);
+    };
+
+    update();
+    setInterval(update, 1000);
   }
 
   loadCompletedFromStorage() {
@@ -188,7 +201,6 @@ class HomeworkPortalApp {
       this.completedItems.add(id);
       this.showToast('Marked as completed! Great progress! 🍁', 'success');
 
-      // Trigger confetti if all currently visible homework is completed!
       const allCurrentDone = this.filteredList.length > 0 && this.filteredList.every(i => this.completedItems.has(i.id));
       if (allCurrentDone && typeof confetti === 'function') {
         confetti({
@@ -199,7 +211,6 @@ class HomeworkPortalApp {
       }
     }
     this.saveCompletedToStorage();
-    this.updateProgressSummary();
     this.renderCurrentView();
   }
 
@@ -214,22 +225,22 @@ class HomeworkPortalApp {
   }
 
   bindEvents() {
-    // Class select change
+    // Class select
     this.classSelect.addEventListener('change', (e) => {
       this.selectedClass = e.target.value;
       this.updateSubjectDropdown();
-      this.updateStageBanner();
       this.filterHomework();
       this.highlightClassPill();
+      this.calculateUploadStats();
     });
 
-    // Section select change
+    // Section select
     this.sectionSelect.addEventListener('change', (e) => {
       this.selectedSection = e.target.value;
       this.filterHomework();
     });
 
-    // Subject select change
+    // Subject select
     this.subjectSelect.addEventListener('change', (e) => {
       this.selectedSubject = e.target.value;
       this.filterHomework();
@@ -241,19 +252,54 @@ class HomeworkPortalApp {
       this.filterHomework();
     });
 
+    // Quick jump buttons in hero
+    document.querySelectorAll('[data-jump]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const jump = e.currentTarget.dataset.jump;
+        if (jump === 'primary') this.classSelect.value = '1';
+        else if (jump === 'middle') this.classSelect.value = '6';
+        else if (jump === 'secondary') this.classSelect.value = '9';
+        else if (jump === 'senior') this.classSelect.value = '11';
+        this.classSelect.dispatchEvent(new Event('change'));
+        // Smooth scroll to assignments
+        document.getElementById('uploadPendingStatusBar').scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // Upload / Pending status filter buttons
+    this.filterStatusAll.addEventListener('click', () => this.setStatusFilter('all'));
+    this.filterStatusUploaded.addEventListener('click', () => this.setStatusFilter('uploaded'));
+    this.filterStatusPending.addEventListener('click', () => this.setStatusFilter('pending'));
+
+    // Top Tabs
+    this.tabStudentZone.addEventListener('click', () => {
+      this.switchView('grid');
+      this.tabStudentZone.className = 'nav-tab-active inline-flex items-center gap-2 px-3.5 py-2 rounded-2xl text-xs sm:text-sm font-bold transition active:scale-95';
+      this.tabCoverageMatrix.className = 'nav-tab-inactive inline-flex items-center gap-2 px-3 py-2 rounded-2xl text-xs sm:text-sm font-semibold transition active:scale-95 border border-transparent hover:border-amber-200';
+    });
+
+    this.tabCoverageMatrix.addEventListener('click', () => {
+      this.switchView('docket');
+      this.tabCoverageMatrix.className = 'nav-tab-active inline-flex items-center gap-2 px-3.5 py-2 rounded-2xl text-xs sm:text-sm font-bold transition active:scale-95';
+      this.tabStudentZone.className = 'nav-tab-inactive inline-flex items-center gap-2 px-3 py-2 rounded-2xl text-xs sm:text-sm font-semibold transition active:scale-95 border border-transparent hover:border-amber-200';
+      document.getElementById('subjectDocketSection').scrollIntoView({ behavior: 'smooth' });
+    });
+
     // Reset filters
     this.resetFiltersBtn.addEventListener('click', () => {
       this.selectedClass = 'all';
       this.selectedSection = 'all';
       this.selectedSubject = 'all';
+      this.selectedStatusFilter = 'all';
       this.searchQuery = '';
       this.classSelect.value = 'all';
       this.sectionSelect.value = 'all';
       this.searchInput.value = '';
       this.updateSubjectDropdown();
-      this.updateStageBanner();
+      this.setStatusFilter('all');
       this.filterHomework();
       this.highlightClassPill();
+      this.calculateUploadStats();
     });
 
     // View Switchers
@@ -285,14 +331,30 @@ class HomeworkPortalApp {
     });
   }
 
+  setStatusFilter(filter) {
+    this.selectedStatusFilter = filter;
+    const activeBtnClass = 'px-3 py-1.5 rounded-lg font-bold bg-white text-slate-800 shadow-xs transition';
+    const inactiveBtnClass = 'px-3 py-1.5 rounded-lg font-semibold text-slate-600 hover:bg-white/60 transition';
+
+    this.filterStatusAll.className = filter === 'all' ? activeBtnClass : inactiveBtnClass;
+    this.filterStatusUploaded.className = filter === 'uploaded' ? activeBtnClass : inactiveBtnClass;
+    this.filterStatusPending.className = filter === 'pending' ? activeBtnClass : inactiveBtnClass;
+
+    if (filter === 'pending') {
+      this.switchView('docket');
+    } else {
+      this.filterHomework();
+    }
+  }
+
   switchView(mode) {
     this.currentViewMode = mode;
-    const activeClass = 'bg-amber-600 text-white font-semibold shadow-xs';
-    const inactiveClass = 'bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium';
+    const activeClass = 'inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-amber-600 text-white font-bold shadow-xs';
+    const inactiveClass = 'inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium';
 
-    this.viewGridBtn.className = `inline-flex items-center gap-1 px-3 py-1.5 rounded-lg transition ${mode === 'grid' ? activeClass : inactiveClass}`;
-    this.viewDocketBtn.className = `inline-flex items-center gap-1 px-3 py-1.5 rounded-lg transition ${mode === 'docket' ? activeClass : inactiveClass}`;
-    this.viewTableBtn.className = `inline-flex items-center gap-1 px-3 py-1.5 rounded-lg transition ${mode === 'table' ? activeClass : inactiveClass}`;
+    this.viewGridBtn.className = mode === 'grid' ? activeClass : inactiveClass;
+    this.viewDocketBtn.className = mode === 'docket' ? activeClass : inactiveClass;
+    this.viewTableBtn.className = mode === 'table' ? activeClass : inactiveClass;
 
     this.renderCurrentView();
   }
@@ -300,7 +362,6 @@ class HomeworkPortalApp {
   renderClassPills() {
     this.classPillsContainer.innerHTML = '';
 
-    // "All" pill
     const allBtn = document.createElement('button');
     allBtn.className = 'class-pill whitespace-nowrap px-3.5 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 ' +
       (this.selectedClass === 'all' ? 'bg-amber-600 text-white shadow-xs' : 'bg-white hover:bg-amber-50 text-slate-700 border border-amber-200');
@@ -311,7 +372,6 @@ class HomeworkPortalApp {
     });
     this.classPillsContainer.appendChild(allBtn);
 
-    // Classes 1 through 12
     for (let i = 1; i <= 12; i++) {
       const btn = document.createElement('button');
       btn.dataset.classNum = i;
@@ -338,22 +398,11 @@ class HomeworkPortalApp {
     });
   }
 
-  updateStageBanner() {
-    const tier = this.getTier(this.selectedClass);
-    const info = STAGE_INFO[tier] || STAGE_INFO.all;
-
-    this.tierBadge.textContent = this.selectedClass === 'all' ? info.tier : `Class ${this.selectedClass} • ${info.tier}`;
-    this.tierBadge.className = `px-3 py-0.5 rounded-full text-xs font-bold uppercase tracking-wide shadow-xs ${info.badgeClass}`;
-    this.tierTitle.textContent = info.title;
-    this.tierDescription.textContent = info.description;
-  }
-
   updateSubjectDropdown() {
     const tier = this.getTier(this.selectedClass);
     let subjects = [];
 
     if (tier === 'all') {
-      // Gather unique subjects across all tiers
       const allSubs = new Set();
       Object.values(CURRICULUM_SUBJECTS).forEach(list => list.forEach(s => allSubs.add(s)));
       subjects = Array.from(allSubs);
@@ -363,7 +412,6 @@ class HomeworkPortalApp {
       this.subjectTierIndicator.textContent = `(${tier} tier)`;
     }
 
-    // Preserve selection if valid
     const currentVal = this.subjectSelect.value;
     this.subjectSelect.innerHTML = `<option value="all">All Subjects</option>`;
 
@@ -382,9 +430,72 @@ class HomeworkPortalApp {
     }
   }
 
+  // Calculate exact Uploaded vs Pending counts based on selected class or total school
+  calculateUploadStats() {
+    let classesToCalculate = [];
+    if (this.selectedClass === 'all') {
+      classesToCalculate = Array.from({ length: 12 }, (_, i) => i + 1);
+    } else {
+      classesToCalculate = [parseInt(this.selectedClass, 10)];
+    }
+
+    let totalSlots = 0;
+    let uploadedSlots = 0;
+    let pendingSlots = 0;
+
+    classesToCalculate.forEach(c => {
+      const tier = this.getTier(String(c));
+      const subs = CURRICULUM_SUBJECTS[tier] || [];
+      totalSlots += subs.length;
+
+      subs.forEach(subj => {
+        const hasHomework = this.homeworkList.some(item => {
+          if (String(item.classNum) !== String(c)) return false;
+          const s = (item.subject || '').toLowerCase();
+          const target = subj.toLowerCase();
+          if (s === target) return true;
+          if (target.includes('math') && s.includes('math')) return true;
+          if (target.includes('science') && s.includes('science')) return true;
+          if (target.includes('ai') && s.includes('ai')) return true;
+          if (target.includes('cs') && s.includes('cs')) return true;
+          if (target.includes('english') && s.includes('english')) return true;
+          if (target.includes('hindi') && s.includes('hindi')) return true;
+          return false;
+        });
+
+        if (hasHomework) {
+          uploadedSlots++;
+        } else {
+          pendingSlots++;
+        }
+      });
+    });
+
+    const percent = totalSlots > 0 ? Math.round((uploadedSlots / totalSlots) * 100) : 0;
+
+    // Update Uploaded vs Pending detail bar
+    if (this.activeClassLabelBadge) {
+      this.activeClassLabelBadge.textContent = this.selectedClass === 'all' ? 'All Classes (1 to 12)' : `Class ${this.selectedClass}`;
+    }
+    if (this.statusAllCount) this.statusAllCount.textContent = totalSlots;
+    if (this.statusUploadedCount) this.statusUploadedCount.textContent = uploadedSlots;
+    if (this.statusPendingCount) this.statusPendingCount.textContent = pendingSlots;
+
+    if (this.coveragePercentText) this.coveragePercentText.textContent = `${percent}% Uploaded (${uploadedSlots}/${totalSlots})`;
+    if (this.coverageUploadedBar) this.coverageUploadedBar.style.width = `${percent}%`;
+    if (this.coveragePendingBar) this.coveragePendingBar.style.width = `${100 - percent}%`;
+
+    if (this.barUploadedLabel) this.barUploadedLabel.textContent = `${uploadedSlots} Uploaded`;
+    if (this.barPendingLabel) this.barPendingLabel.textContent = `${pendingSlots} Pending Upload`;
+
+    // Update Hero Stats
+    if (this.heroUploadedCount) this.heroUploadedCount.textContent = this.selectedClass === 'all' ? this.homeworkList.length : uploadedSlots;
+    if (this.heroFilesCount) this.heroFilesCount.textContent = this.selectedClass === 'all' ? this.homeworkList.length : this.filteredList.length;
+    if (this.heroPendingCount) this.heroPendingCount.textContent = pendingSlots;
+  }
+
   async fetchData() {
     try {
-      this.lastSyncLabel.textContent = 'Loading...';
       const res = await fetch('/api/homework');
       if (!res.ok) throw new Error('API network error');
       const data = await res.json();
@@ -393,22 +504,22 @@ class HomeworkPortalApp {
       this.classFolders = data.classFolders || [];
       this.lastSyncTime = data.lastSyncTime || null;
 
-      this.updateDriveStatus(data.lastSyncTime);
+      if (this.navTotalBadge) this.navTotalBadge.textContent = this.homeworkList.length;
+
       this.updateSubjectDropdown();
-      this.updateStageBanner();
       this.filterHomework();
       this.updatePillCounts();
+      this.calculateUploadStats();
 
-      // Automatically trigger live sync with Google Drive on every page load/refresh
+      // Automatically sync live with Google Drive on every page load/refresh
       console.log('[Portal] Triggering on-refresh live Drive synchronization...');
       this.syncWithDrive({ isBackground: true });
     } catch (err) {
       console.error('Fetch error:', err);
-      this.lastSyncLabel.textContent = 'Drive connected (cached)';
       this.showToast('Loaded offline holiday homework cache', 'info');
     }
 
-    // Set up auto-sync on tab refocus and periodic 90s interval
+    // Auto-sync on tab refocus and periodic 90s interval
     window.addEventListener('focus', () => {
       this.syncWithDrive({ isBackground: true });
     });
@@ -422,20 +533,7 @@ class HomeworkPortalApp {
     }, 90 * 1000);
   }
 
-  updateDriveStatus(timestamp) {
-    if (this.totalFilesBadge) {
-      this.totalFilesBadge.textContent = this.homeworkList.length;
-    }
-    if (!timestamp) {
-      this.lastSyncLabel.textContent = 'Synced just now';
-      return;
-    }
-    const date = new Date(timestamp);
-    this.lastSyncLabel.textContent = `Synced: ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
-  }
-
   updatePillCounts() {
-    // Show count badges on quick class pills
     const pills = this.classPillsContainer.querySelectorAll('.class-pill');
     pills.forEach((p) => {
       const c = p.dataset.classNum;
@@ -455,8 +553,6 @@ class HomeworkPortalApp {
       this.syncDriveBtn.disabled = true;
       this.syncIcon.classList.add('animate-spin');
       this.showToast('Checking Google Drive for newly uploaded assignments...', 'info');
-    } else {
-      this.lastSyncLabel.textContent = 'Syncing Drive...';
     }
 
     try {
@@ -469,9 +565,12 @@ class HomeworkPortalApp {
         const newCount = newHomework.length;
         this.homeworkList = newHomework;
         this.lastSyncTime = result.data.lastSyncTime;
-        this.updateDriveStatus(result.data.lastSyncTime);
+
+        if (this.navTotalBadge) this.navTotalBadge.textContent = this.homeworkList.length;
+
         this.filterHomework();
         this.updatePillCounts();
+        this.calculateUploadStats();
 
         if (newCount > prevCount) {
           const added = newCount - prevCount;
@@ -484,7 +583,6 @@ class HomeworkPortalApp {
       }
     } catch (err) {
       console.warn('Sync notice:', err.message);
-      this.updateDriveStatus(this.lastSyncTime);
       if (!isBackground) {
         this.showToast('Google Drive synced from cached repository.', 'info');
       }
@@ -513,7 +611,6 @@ class HomeworkPortalApp {
       const target = this.selectedSubject.toLowerCase();
       list = list.filter(item => {
         const s = (item.subject || '').toLowerCase();
-        // Exact match or partial match
         if (s === target) return true;
         if (target.includes('math') && s.includes('math')) return true;
         if (target.includes('science') && s.includes('science')) return true;
@@ -539,22 +636,12 @@ class HomeworkPortalApp {
 
     this.filteredList = list;
     this.resultsCountBadge.textContent = `Showing ${list.length} Assignment${list.length === 1 ? '' : 's'}`;
-    this.updateProgressSummary();
+    this.calculateUploadStats();
     this.renderCurrentView();
   }
 
-  updateProgressSummary() {
-    const total = this.filteredList.length;
-    const completed = this.filteredList.filter(i => this.completedItems.has(i.id)).length;
-    const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
-
-    this.progressCount.textContent = `${completed} / ${total}`;
-    this.progressPercent.textContent = `${percent}% Completed`;
-    this.progressBar.style.width = `${percent}%`;
-  }
-
   renderCurrentView() {
-    if (this.filteredList.length === 0) {
+    if (this.filteredList.length === 0 && this.selectedStatusFilter !== 'pending') {
       this.cardsView.classList.add('hidden');
       this.tableView.classList.add('hidden');
       this.subjectDocketSection.classList.add('hidden');
@@ -562,9 +649,9 @@ class HomeworkPortalApp {
 
       const msg = document.getElementById('emptyStateMsg');
       if (this.selectedClass !== 'all' && this.selectedSubject !== 'all') {
-        msg.textContent = `No homework currently uploaded for Class ${this.selectedClass} - ${this.selectedSubject}. Check Google Drive or refresh when teachers post new files.`;
+        msg.textContent = `No homework uploaded for Class ${this.selectedClass} - ${this.selectedSubject}. Check Google Drive or click Subject Docket to view pending status.`;
       } else {
-        msg.textContent = `No assignments match your search filter. Try resetting filters or clicking Refresh Drive.`;
+        msg.textContent = `No assignments match your filter. Try resetting filters or clicking Refresh Drive.`;
       }
       return;
     }
@@ -588,7 +675,6 @@ class HomeworkPortalApp {
       this.renderTable();
     }
 
-    // Refresh lucide icons if available
     if (window.lucide && typeof window.lucide.createIcons === 'function') {
       window.lucide.createIcons();
     }
@@ -602,11 +688,10 @@ class HomeworkPortalApp {
       const iconName = getSubjectLucideIcon(item.subject);
 
       const card = document.createElement('div');
-      card.className = `harvest-card rounded-2xl bg-white border p-5 flex flex-col justify-between transition-all relative overflow-hidden ${
-        isDone ? 'border-emerald-300 bg-emerald-50/20' : 'border-amber-200/90 shadow-xs'
+      card.className = `harvest-card rounded-2xl bg-white p-5 flex flex-col justify-between transition-all relative overflow-hidden ${
+        isDone ? 'border-emerald-300 bg-emerald-50/20' : 'shadow-xs'
       }`;
 
-      // Card Header
       card.innerHTML = `
         <div>
           <!-- Top Tag Bar -->
@@ -645,7 +730,7 @@ class HomeworkPortalApp {
             </div>
           </div>
 
-          <!-- Description / Task hint -->
+          <!-- Description -->
           <p class="text-xs text-slate-600 mt-2 line-clamp-3 leading-relaxed">
             ${item.description || 'Autumn break assignment. Please complete and submit on reopening day.'}
           </p>
@@ -659,17 +744,17 @@ class HomeworkPortalApp {
           </div>
 
           <div class="grid grid-cols-3 gap-2">
-            <button class="preview-btn inline-flex items-center justify-center gap-1 px-3 py-2 text-xs font-semibold rounded-xl bg-amber-600 hover:bg-amber-700 text-white shadow-xs transition active:scale-95" data-id="${item.id}">
+            <button class="preview-btn inline-flex items-center justify-center gap-1 px-3 py-2 text-xs font-bold rounded-xl bg-amber-600 hover:bg-amber-700 text-white shadow-xs transition active:scale-95" data-id="${item.id}">
               ${renderIconSvg('eye', 'w-3.5 h-3.5')}
               <span>Preview</span>
             </button>
 
-            <a href="${item.downloadUrl}" target="_blank" download class="inline-flex items-center justify-center gap-1 px-3 py-2 text-xs font-semibold rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300 transition active:scale-95">
+            <a href="${item.downloadUrl}" target="_blank" download class="inline-flex items-center justify-center gap-1 px-3 py-2 text-xs font-bold rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300 transition active:scale-95">
               ${renderIconSvg('download', 'w-3.5 h-3.5')}
               <span>Download</span>
             </a>
 
-            <a href="${item.viewUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-1 px-3 py-2 text-xs font-semibold rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition active:scale-95">
+            <a href="${item.viewUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-1 px-3 py-2 text-xs font-bold rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition active:scale-95">
               ${renderIconSvg('external-link', 'w-3.5 h-3.5')}
               <span>Drive</span>
             </a>
@@ -677,7 +762,6 @@ class HomeworkPortalApp {
         </div>
       `;
 
-      // Event listeners for card buttons
       card.querySelector('.complete-toggle').addEventListener('click', () => {
         this.toggleItemComplete(item.id);
       });
@@ -701,11 +785,10 @@ class HomeworkPortalApp {
     
     const uniqueCurriculum = Array.from(new Set(curriculum));
     this.docketTitle.textContent = this.selectedClass === 'all' 
-      ? 'CBSE Subject Docket (All Classes)' 
-      : `Class ${this.selectedClass} Official CBSE Subject Docket`;
+      ? 'CBSE Subject Docket & Pending Uploads (All Classes)' 
+      : `Class ${this.selectedClass} CBSE Subject Coverage & Pending Docket`;
 
     uniqueCurriculum.forEach((subj) => {
-      // Find all homework matching this subject for currently selected class
       const matching = this.filteredList.filter(item => {
         const s = (item.subject || '').toLowerCase();
         const target = subj.toLowerCase();
@@ -727,20 +810,20 @@ class HomeworkPortalApp {
       card.className = `p-4 rounded-2xl border transition-all ${
         isUploaded 
           ? (allDone ? 'bg-emerald-50/70 border-emerald-300' : 'bg-white border-amber-200 shadow-xs') 
-          : 'bg-harvest-linen/40 border-dashed border-slate-300'
+          : 'bg-orange-50/40 border-dashed border-orange-300'
       }`;
 
       card.innerHTML = `
         <div class="flex items-center justify-between mb-2">
           <div class="flex items-center gap-2">
-            <div class="w-8 h-8 rounded-lg ${isUploaded ? 'bg-amber-600 text-white' : 'bg-slate-200 text-slate-500'} flex items-center justify-center">
+            <div class="w-8 h-8 rounded-lg ${isUploaded ? 'bg-emerald-600 text-white' : 'bg-orange-200 text-orange-800'} flex items-center justify-center font-bold">
               ${renderIconSvg(iconName, 'w-4 h-4')}
             </div>
             <span class="text-sm font-bold text-slate-800">${subj}</span>
           </div>
           ${isUploaded 
-            ? `<span class="text-[11px] font-bold px-2 py-0.5 rounded-full ${allDone ? 'bg-emerald-200 text-emerald-900' : 'bg-amber-100 text-amber-900'}">${matching.length} File${matching.length > 1 ? 's' : ''}</span>`
-            : `<span class="text-[10px] font-medium px-2 py-0.5 rounded-full bg-slate-100 text-slate-500">Pending Upload</span>`
+            ? `<span class="text-[11px] font-bold px-2 py-0.5 rounded-full ${allDone ? 'bg-emerald-200 text-emerald-900' : 'bg-emerald-100 text-emerald-800'}">✓ ${matching.length} Uploaded</span>`
+            : `<span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-orange-100 text-orange-800 border border-orange-200">⏳ Pending Upload</span>`
           }
         </div>
 
@@ -754,9 +837,10 @@ class HomeworkPortalApp {
             `).join('')}
           </ul>
         ` : `
-          <p class="text-[11px] text-slate-400 mt-2 italic">
-            Self-revision / No holiday homework uploaded by teacher yet.
-          </p>
+          <div class="mt-2 pt-2 border-t border-orange-200/50 flex items-center justify-between text-[11px] text-orange-800">
+            <span>Awaiting teacher upload to Drive</span>
+            <button onclick="document.getElementById('syncDriveBtn').click()" class="underline font-bold text-orange-700 hover:text-orange-900">Check Drive</button>
+          </div>
         `}
       `;
 
@@ -852,7 +936,6 @@ class HomeworkPortalApp {
     const iconName = getSubjectLucideIcon(item.subject);
     this.modalSubjectIcon.innerHTML = renderIconSvg(iconName, 'w-5 h-5 text-white');
 
-    // Handle images vs doc iframe
     if (item.fileExtension === 'jpg' || item.fileExtension === 'jpeg' || item.fileExtension === 'png') {
       this.previewIframe.classList.add('hidden');
       this.modalSpinner.classList.add('hidden');
@@ -900,7 +983,6 @@ class HomeworkPortalApp {
 
     container.appendChild(toast);
 
-    // Animate in
     requestAnimationFrame(() => {
       toast.classList.remove('translate-y-2', 'opacity-0');
     });
@@ -912,7 +994,6 @@ class HomeworkPortalApp {
   }
 }
 
-// Initialize Application when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
   window.portalApp = new HomeworkPortalApp();
 });
