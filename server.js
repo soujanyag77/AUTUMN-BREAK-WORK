@@ -77,8 +77,8 @@ app.use((req, res) => {
 
 app.listen(PORT, () => {
   console.log(`====================================================`);
-  console.log(`CBSE Autumn Break Holiday Homework Portal (Oct 2026)`);
+  console.log(`PMSHRI KENDRIYA VIDYALAYA TENALI PORTAL for VACATION WORK`);
   console.log(`Server running at: http://localhost:${PORT}`);
-  console.log(`Master Google Drive: ${MASTER_DRIVE_URL}`);
+  console.log(`Work Submission Date: 26/10/2026 (Reopening Day)`);
   console.log(`====================================================`);
 });

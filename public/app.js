@@ -743,20 +743,15 @@ class HomeworkPortalApp {
             <span>${item.formattedDate || 'Oct 2026'}</span>
           </div>
 
-          <div class="grid grid-cols-3 gap-2">
-            <button class="preview-btn inline-flex items-center justify-center gap-1 px-3 py-2 text-xs font-bold rounded-xl bg-amber-600 hover:bg-amber-700 text-white shadow-xs transition active:scale-95" data-id="${item.id}">
-              ${renderIconSvg('eye', 'w-3.5 h-3.5')}
+          <div class="grid grid-cols-2 gap-2.5">
+            <button class="preview-btn inline-flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold rounded-xl bg-amber-600 hover:bg-amber-700 text-white shadow-xs transition active:scale-95" data-id="${item.id}">
+              ${renderIconSvg('eye', 'w-4 h-4')}
               <span>Preview</span>
             </button>
 
-            <a href="${item.downloadUrl}" target="_blank" download class="inline-flex items-center justify-center gap-1 px-3 py-2 text-xs font-bold rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300 transition active:scale-95">
-              ${renderIconSvg('download', 'w-3.5 h-3.5')}
+            <a href="${item.downloadUrl}" target="_blank" download class="inline-flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-bold rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 border border-amber-300 transition active:scale-95">
+              ${renderIconSvg('download', 'w-4 h-4')}
               <span>Download</span>
-            </a>
-
-            <a href="${item.viewUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-1 px-3 py-2 text-xs font-bold rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition active:scale-95">
-              ${renderIconSvg('external-link', 'w-3.5 h-3.5')}
-              <span>Drive</span>
             </a>
           </div>
         </div>
@@ -838,8 +833,8 @@ class HomeworkPortalApp {
           </ul>
         ` : `
           <div class="mt-2 pt-2 border-t border-orange-200/50 flex items-center justify-between text-[11px] text-orange-800">
-            <span>Awaiting teacher upload to Drive</span>
-            <button onclick="document.getElementById('syncDriveBtn').click()" class="underline font-bold text-orange-700 hover:text-orange-900">Check Drive</button>
+            <span>Awaiting teacher upload / In progress</span>
+            <button onclick="document.getElementById('syncDriveBtn').click()" class="underline font-bold text-orange-700 hover:text-orange-900">Refresh</button>
           </div>
         `}
       `;
@@ -897,15 +892,12 @@ class HomeworkPortalApp {
           ${item.formattedDate || 'Oct 2026'}
         </td>
         <td class="py-3 px-4 text-right whitespace-nowrap">
-          <div class="inline-flex items-center gap-1.5">
+          <div class="inline-flex items-center gap-2">
             <button class="table-preview-btn p-1.5 rounded-lg text-amber-700 hover:bg-amber-100 transition" title="Preview" data-id="${item.id}">
               ${renderIconSvg('eye', 'w-4 h-4')}
             </button>
             <a href="${item.downloadUrl}" target="_blank" download class="p-1.5 rounded-lg text-amber-700 hover:bg-amber-100 transition" title="Download">
               ${renderIconSvg('download', 'w-4 h-4')}
-            </a>
-            <a href="${item.viewUrl}" target="_blank" rel="noopener noreferrer" class="p-1.5 rounded-lg text-slate-600 hover:bg-slate-100 transition" title="Open in Google Drive">
-              ${renderIconSvg('external-link', 'w-4 h-4')}
             </a>
           </div>
         </td>
